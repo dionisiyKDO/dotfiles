@@ -11,8 +11,10 @@
     file.".config/waybar/style.css".source = ./waybar/style.css;
 
     packages = with pkgs; [
-      hyprpaper # wallpaper
-      # dependacy for waybar
+      swww # Wallpaper manager with transitions PeepoHappy
+      # hyprpaper # Wallpaper manager without transitions Sadge
+      
+      # dependacies for waybar
       dbus
       glib
       gtk3
