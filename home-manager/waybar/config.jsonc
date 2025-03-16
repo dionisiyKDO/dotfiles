@@ -1,14 +1,36 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 30,
-    "margin": "5 5 0 5",
-    "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock"],
-    "modules-right": ["tray", "network", "pulseaudio", "backlight", "battery"],
+    "height": 40,
+    "spacing": 4,
+    "margin-top": 6,
+    "margin-left": 8,
+    "margin-right": 8,
+    
+    "modules-left": [
+        "hyprland/workspaces",
+        "custom/wallpaper-random",
+        "custom/wallpaper-favorite"
+    ],
+    
+    "modules-center": [
+        "clock"
+    ],
+    
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "memory",
+        "cpu",
+        "battery",
+        "tray",
+        "custom/power"
+    ],
     
     "hyprland/workspaces": {
         "format": "{icon}",
+        "on-click": "activate",
+        "all-outputs": true,
         "format-icons": {
             "1": "一",
             "2": "二",
@@ -21,46 +43,30 @@
             "9": "九",
             "10": "十"
         },
-        "on-click": "activate",
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1",
-        "all-outputs": true
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
     },
     
     "clock": {
-        "format": "{:%H:%M}",
-        "format-alt": "{:%Y-%m-%d %A}",
-        "tooltip-format": "{:%Y-%m-%d | %H:%M}",
-        "interval": 60
+        "format": " {:%H:%M}",
+        "format-alt": " {:%Y-%m-%d %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
     
-    "tray": {
-        "icon-size": 16,
-        "spacing": 10
+    "cpu": {
+        "format": "󰻠 {usage}%",
+        "tooltip": true,
+        "interval": 2
     },
     
-    "network": {
-        "format-wifi": "󰖩 {essid}",
-        "format-ethernet": "󰈀 {ifname}",
-        "format-disconnected": "󰖪 ",
-        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "nm-connection-editor"
-    },
-    
-    "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": "󰝟",
-        "format-icons": {
-            "default": ["󰕿", "󰖀", "󰕾"]
-        },
-        "on-click": "pavucontrol"
-    },
-    
-    "backlight": {
-        "format": "{icon} {percent}%",
-        "format-icons": ["󰃞", "󰃟", "󰃝", "󰃠"],
-        "on-scroll-up": "brightnessctl set +5%",
-        "on-scroll-down": "brightnessctl set 5%-"
+    "memory": {
+        "format": "󰍛 {}%",
+        "interval": 2
     },
     
     "battery": {
@@ -72,7 +78,48 @@
         "format": "{icon} {capacity}%",
         "format-charging": "󰂄 {capacity}%",
         "format-plugged": "󰚥 {capacity}%",
-        "format-alt": "{time} {icon}",
         "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    
+    "network": {
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "󰈀 {ipaddr}",
+        "format-linked": "󰤫 {ifname}",
+        "format-disconnected": "󰤭 Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
+    },
+    
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 Muted",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol"
+    },
+    
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+    
+    "custom/power": {
+        "format": "⏻",
+        "on-click": "wlogout",
+        "tooltip": false
+    },
+
+    "custom/wallpaper-random": {
+        "format": "󰸉",
+        "tooltip": "Set random wallpaper",
+        "on-click": "~/.config/waybar/scripts/random-wallpaper.sh",
+        "interval": "once"
+    },
+    
+    "custom/wallpaper-favorite": {
+        "format": "󰸶",
+        "tooltip": "Set favorite wallpaper",
+        "on-click": "~/.config/waybar/scripts/favorite-wallpaper.sh",
+        "interval": "once"
     }
 }

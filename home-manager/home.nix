@@ -8,6 +8,7 @@
   #   AGS widget, but it is quite complicated, so set aside for now. 
   #   Later when i'm more comfortable with Nix, I'll try to integrate 
   #   it into my NixOS and Home Manager configurations.
+  #   https://github.com/Aylur/ags
   # programs.ags = {
   #   enable = true;
   #   configDir = ../ags;  # Ensure this relative path is correct
