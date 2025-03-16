@@ -1,6 +1,18 @@
+# { lib, pkgs, zen-browser, ags, ... }: # AGS widget
 { lib, pkgs, zen-browser, ... }:
 {
+  # imports = [ ags.homeManagerModules.default ];
+
   programs.waybar.enable = true;
+  
+  #   AGS widget, but it is quite complicated, so set aside for now. 
+  #   Later when i'm more comfortable with Nix, I'll try to integrate 
+  #   it into my NixOS and Home Manager configurations.
+  # programs.ags = {
+  #   enable = true;
+  #   configDir = ../ags;  # Ensure this relative path is correct
+  # };
+
   home = {
     username = "dionisiy";
     homeDirectory = "/home/dionisiy";
@@ -21,9 +33,13 @@
       gtk-layer-shell
 
       btop
+      killall
 
       pywal
       zen-browser.packages."${system}".default 
+
+      # ags.packages.${system}.battery # AGS widget
+      fzf
     ];
   };
 }

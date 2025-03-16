@@ -10,9 +10,11 @@
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    # ags.url = "github:aylur/ags";  # AGS widget
   };
 
-  outputs = { nixpkgs, home-manager, zen-browser, ... }:
+  # outputs = { nixpkgs, home-manager, zen-browser, ags, ... }@inputs: # AGS widget
+  outputs = { nixpkgs, home-manager, zen-browser, ... }@inputs:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -24,7 +26,8 @@
           modules = [ 
             ./home.nix 
           ];
-          extraSpecialArgs = { inherit zen-browser; };
+          # extraSpecialArgs = { inherit zen-browser ags system; }; # AGS widget
+          extraSpecialArgs = { inherit zen-browser system; };
         };
       };
     };
