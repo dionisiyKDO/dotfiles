@@ -6,81 +6,46 @@
     "margin-top": 6,
     "margin-left": 8,
     "margin-right": 8,
-    
+
     "modules-left": [
         "hyprland/workspaces",
         "custom/wallpaper-random",
         "custom/wallpaper-favorite"
     ],
-    
+
     "modules-center": [
         "clock"
     ],
-    
+
     "modules-right": [
         "pulseaudio",
         "network",
         "memory",
         "cpu",
-        "battery",
         "tray",
         "custom/power"
     ],
-    
+
     "hyprland/workspaces": {
-        "format": "{icon}",
-        "on-click": "activate",
-        "all-outputs": true,
-        "format-icons": {
-            "1": "一",
-            "2": "二",
-            "3": "三",
-            "4": "四",
-            "5": "五",
-            "6": "六",
-            "7": "七",
-            "8": "八",
-            "9": "九",
-            "10": "十"
-        },
-        "persistent-workspaces": {
-            "1": [],
-            "2": [],
-            "3": [],
-            "4": [],
-            "5": []
-        }
+      "format": "{icon}",
+      "on-click": "activate",
+      "all-outputs": true,
+      "format-icons": {
+          "1": "一", "2": "二", "3": "三", "4": "四", "5": "五",
+          "6": "六", "7": "七", "8": "八", "9": "九", "10": "十"
+      },
+      "persistent-workspaces": {"1": [], "2": [], "3": [], "4": [], "5": []}
     },
-    
+
     "clock": {
         "format": " {:%H:%M}",
         "format-alt": " {:%Y-%m-%d %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },
-    
-    "cpu": {
-        "format": "󰻠 {usage}%",
-        "tooltip": true,
-        "interval": 2
-    },
-    
-    "memory": {
-        "format": "󰍛 {}%",
-        "interval": 2
-    },
-    
-    "battery": {
-        "bat": "BAT0",
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon} {capacity}%",
-        "format-charging": "󰂄 {capacity}%",
-        "format-plugged": "󰚥 {capacity}%",
-        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-    },
-    
+
+    "cpu": {"format": "󰻠 {usage}%", "tooltip": true, "interval": 2},
+    "memory": {"format": "󰍛 {}%", "interval": 2},
+
     "network": {
         "format-wifi": "󰤨 {essid}",
         "format-ethernet": "󰈀 {ipaddr}",
@@ -88,38 +53,29 @@
         "format-disconnected": "󰤭 Disconnected",
         "tooltip-format": "{ifname}: {ipaddr}/{cidr}"
     },
-    
+
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-muted": "󰝟 Muted",
-        "format-icons": {
-            "default": ["󰕿", "󰖀", "󰕾"]
-        },
+        "format-icons": {"default": ["󰕿", "󰖀", "󰕾"]},
         "on-click": "pavucontrol"
     },
-    
-    "tray": {
-        "icon-size": 16,
-        "spacing": 8
-    },
-    
-    "custom/power": {
-        "format": "⏻",
-        "on-click": "wlogout",
-        "tooltip": false
-    },
+
+    "tray": {"icon-size": 16, "spacing": 8},
+
+    "custom/power": {"format": "⏻", "on-click": "wlogout", "tooltip": false},
 
     "custom/wallpaper-random": {
-        "format": "󰸉",
-        "tooltip": "Set random wallpaper",
-        "on-click": "~/.config/waybar/scripts/random-wallpaper.sh",
+        "format": "",
+        "tooltip-format": "Random wallpaper",
+        "on-click": "bash /home/dionisiy/Desktop/MyNixOSConfig/home-manager/waybar/scripts/random-wallpaper.sh",
         "interval": "once"
     },
-    
+
     "custom/wallpaper-favorite": {
-        "format": "󰸶",
-        "tooltip": "Set favorite wallpaper",
-        "on-click": "~/.config/waybar/scripts/favorite-wallpaper.sh",
+        "format": "󰸉",
+        "tooltip-format": "Favorite wallpaper",
+        "on-click": "bash /home/dionisiy/Desktop/MyNixOSConfig/home-manager/waybar/scripts/favorite-wallpaper.sh",
         "interval": "once"
     }
 }

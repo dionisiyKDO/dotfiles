@@ -1,82 +1,31 @@
 @import '/home/dionisiy/.cache/wal/colors-waybar.css';
 /* Import pywal colors */
+@import '/home/dionisiy/.cache/wal/colors-waybar.css';
+/* Import pywal colors */
 
-/* Assigning colors to various variables */
-/* @define-color warning @color11;
-@define-color critical @color1;
-@define-color mode @color0;
-@define-color unfocused @color14;
-@define-color focused @color14;
-@define-color inactive @color5;
-@define-color sound @color13;
-@define-color network @color5;
-@define-color memory @color14;
-@define-color cpu @color2;
-@define-color temp @color10;
-@define-color layout @color11;
-@define-color battery @color6;
-@define-color date @color0;
-@define-color time @color15; */
+/* Meaningful color names */
+@define-color background @color0;
+@define-color text @color7;
+@define-color highlight @color13;
+@define-color warning @color11;
+@define-color critical @color9;
+@define-color accent @color4;
+@define-color success @color10;
+@define-color inactive @color3;
+@define-color muted @color15;
 
-
-/* Semantic color assignments */
-@define-color main-bg @color0;           /* Main bar background - darkest color */
-@define-color main-fg @color7;           /* Main text - lightest color */
-@define-color inactive-bg @color2;       /* For inactive workspace backgrounds */
-@define-color inactive-fg @color15;      /* For inactive workspace text */
-@define-color active-bg @color13;        /* For active workspace background - soft pink/beige */
-@define-color active-fg @color0;         /* For active workspace text - darkest for contrast */
-@define-color urgent-bg @color9;         /* For urgent workspaces - warm tone */
-@define-color urgent-fg @color0;         /* For urgent workspace text */
-@define-color tooltip-bg @color3;        /* For tooltips background */
-@define-color tooltip-fg @color15;       /* For tooltips text */
-@define-color border-color @color4;      /* For borders */
-@define-color separator-color @color4;   /* For separators between modules */
-@define-color module-bg @color1;         /* For module backgrounds */
-@define-color module-fg @color15;        /* For module text */
-@define-color highlight-bg @color5;      /* For highlighted elements */
-@define-color highlight-fg @color0;      /* For text in highlighted elements */
-@define-color warning-color @color11;    /* For warnings */
-@define-color critical-color @color9;    /* For critical notifications */
-@define-color success-color @color10;    /* For success notifications */
-@define-color slider-color @color14;     /* For sliders and progress bars */
-@define-color arrow-color @color13;      /* For arrows/accents - soft pink/beige */
-
-/* Reset all styles */
-* {
-    border: none;
-    border-radius: 0;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
-    text-shadow: none;
-}
-
+/* General Waybar styling */
 window#waybar {
     background: rgba(14, 13, 13, 0.75);
-    color: @foreground;
+    color: @text;
     font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free";
     font-size: 14px;
-    border-radius: 0;
     transition: background 0.2s ease;
     margin: 5px 5px 0 5px;
 }
 
-/* Consistent module styling with spacing but minimal decoration */
-#workspaces,
-#mode,
-#clock,
-#pulseaudio,
-#network,
-#cpu,
-#memory,
-#temperature,
-#backlight,
-#battery,
-#tray,
-#custom-media,
-#custom-power {
+/* Modules: Unified appearance */
+#workspaces, #mode, #clock, #pulseaudio, #network, #cpu, #memory, #battery, #tray, #custom-power {
     padding: 0 12px;
     margin: 5px 2px;
     border-radius: 8px;
@@ -84,199 +33,85 @@ window#waybar {
     transition: all 0.2s ease;
 }
 
-/* Workspace buttons styling */
+/* Workspaces styling */
 #workspaces button {
-    color: @color3;  /* Use medium gray for inactive */
+    color: @inactive;
     font-size: 16px;
     padding: 0 6px;
     margin: 0 3px;
     background: transparent;
     transition: all 0.2s ease;
-    border-bottom: 2px solid rgba(0, 0, 0, 0);
+    border-bottom: 2px solid transparent;
 }
 
-/* Active workspace - vibrant but not overwhelming */
 #workspaces button.active {
-    color: @color13;  /* Soft pink/beige */
+    color: @highlight;
     font-weight: bold;
-    
-    border-bottom: 2px solid @color13;
-    padding-bottom: 2px;
+    border-bottom: 2px solid @highlight;
 }
 
-/* Urgent workspace - subtle but noticeable */
 #workspaces button.urgent {
-    color: @color9;
-    border-bottom: 2px solid @color9;
-    padding-bottom: 2px;
+    color: @critical;
+    border-bottom: 2px solid @critical;
 }
 
-/* Hover effect for workspace buttons */
 #workspaces button:hover {
-    color: @color15;
-    border-bottom: 2px solid @color15;
-    padding-bottom: 2px;
-    box-shadow: none;
+    color: @muted;
+    border-bottom: 2px solid @muted;
 }
 
-/* Clock module - make it stand out but not too much */
+/* Clock module */
 #clock {
-    color: @color7;
+    color: @text;
     font-weight: bold;
     margin-right: 8px;
 }
 
-/* Battery with elegant charging indicator */
-#battery {
-    color: @color4;
-}
-
-#battery.charging {
-    color: @color10;
-}
-
-#battery.warning:not(.charging) {
-    color: @color11;
-    animation: pulse 2s infinite;
-}
-
-#battery.critical:not(.charging) {
-    color: @color9;
-    animation: pulse 1s infinite;
-}
-
 /* Network module */
-#network {
-    color: @color6;
-}
-
-#network.disconnected {
-    color: @color9;
-    opacity: 0.7;
-}
+#network { color: @accent; }
+#network.disconnected { color: @critical; opacity: 0.7; }
 
 /* Audio module */
-#pulseaudio {
-    color: @color5;
-}
+#pulseaudio { color: @accent; }
+#pulseaudio.muted { color: @critical; opacity: 0.7; }
 
-#pulseaudio.muted {
-    color: @color9;
-    opacity: 0.7;
-}
-
-/* CPU and Memory - subtle display */
-#cpu, #memory {
-    color: @color4;
-}
+/* CPU & Memory */
+#cpu, #memory { color: @accent; }
 
 /* Custom tooltip styling */
 tooltip {
     background: rgba(20, 20, 20, 0.9);
     border-radius: 8px;
-    border: 1px solid @color3;
+    border: 1px solid @inactive;
 }
 
 tooltip label {
-    color: @color7;
+    color: @text;
     padding: 6px;
 }
 
-/* Add a subtle glow animation for critical alerts */
+/* Pulse animation for alerts */
 @keyframes pulse {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.4;
-    }
-    100% {
-        opacity: 1;
-    }
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
 }
 
 /* Tray menu styling */
 #tray menu {
     background: rgba(14, 13, 13, 0.9);
-    border: 1px solid @color3;
+    border: 1px solid @inactive;
     border-radius: 8px;
 }
 
-/* Power button or other custom button */
+/* Power button */
 #custom-power {
-    color: @color13;
+    color: @highlight;
     margin-right: 8px;
     font-size: 16px;
 }
 
-/* #workspaces button.active {
-    background: @color4;
-    color: @background;
-    border-radius: 12px;
-    padding: 0 12px;
+/* Wallpaper buttons */
+#custom-wallpaper-random, #custom-wallpaper-favorite {
     min-width: 30px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
-
-#workspaces button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-#clock,
-#battery,
-#network,
-#pulseaudio,
-#backlight,
-#tray {
-    padding: 0 10px;
-    margin: 4px 3px;
-    color: @foreground;
-    border-radius: 6px;
-    background: alpha(@color7, 0.15);
-}
-
-#clock {
-    background: alpha(@color6, 0.15);
-    font-weight: bold;
-    font-size: 14px;
-}
-
-#battery.warning {
-    background: alpha(@color3, 0.4);
-}
-
-#battery.critical {
-    background: alpha(@color1, 0.4);
-    animation: blink 1s infinite alternate;
-}
-
-@keyframes blink {
-    to {
-        background: alpha(@background, 0.8);
-    }
-}
-
-#battery.charging {
-    background: alpha(@color2, 0.15);
-}
-
-#network.disconnected {
-    background: alpha(@color1, 0.15);
-}
-
-#tray {
-    padding: 0 8px;
-    margin-right: 6px;
-}
-
-tooltip {
-    background: @background;
-    border: 1px solid @color4;
-    border-radius: 8px;
-}
-
-tooltip label {
-    color: @foreground;
-    padding: 5px;
-} */
