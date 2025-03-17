@@ -4,9 +4,9 @@
   # imports = [ ags.homeManagerModules.default ];
 
   programs.waybar.enable = true;
-  
-  #   AGS widget, but it is quite complicated, so set aside for now. 
-  #   Later when i'm more comfortable with Nix, I'll try to integrate 
+
+  #   AGS widget, but it is quite complicated, so set aside for now.
+  #   Later when i'm more comfortable with Nix, I'll try to integrate
   #   it into my NixOS and Home Manager configurations.
   #   https://github.com/Aylur/ags
   # programs.ags = {
@@ -17,16 +17,16 @@
   home = {
     username = "dionisiy";
     homeDirectory = "/home/dionisiy";
-    stateVersion = "23.11";
+    stateVersion = "24.11";
 
-    
+
     file.".config/waybar/config".source = ./waybar/config.jsonc;
     file.".config/waybar/style.css".source = ./waybar/style.css;
 
     packages = with pkgs; [
       swww # Wallpaper manager with transitions PeepoHappy
       # hyprpaper # Wallpaper manager without transitions Sadge
-      
+
       # dependacies for waybar
       dbus
       glib
@@ -35,9 +35,17 @@
 
       btop
       killall
+      zed-editor
+      obsidian
+      vlc
+      activitywatch
+      zoom-us
+      uv
+      python311
+      # python311Packages.numpy
 
       pywal
-      zen-browser.packages."${system}".default 
+      zen-browser.packages."${system}".default
 
       # ags.packages.${system}.battery # AGS widget
       fzf
