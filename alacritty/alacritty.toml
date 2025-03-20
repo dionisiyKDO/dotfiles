@@ -1,0 +1,29 @@
+[font]
+size = 12
+
+[font.bold]
+family = "JetbrainsMono Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetbrainsMono Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "JetbrainsMono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetbrainsMono Nerd Font"
+style = "Regular"
+
+# [general]
+# import = ["~/.cache/wal/color-alacritty.toml"]
+
+[window]
+opacity = 0.85
+blur = true
+
+[window.padding]
+x = 7
+y = 4
