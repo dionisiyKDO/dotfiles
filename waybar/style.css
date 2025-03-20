@@ -1,0 +1,144 @@
+@import "/home/dionisiy/.cache/wal/colors-waybar.css";
+/* Import pywal colors */
+
+/* Meaningful color names */
+@define-color background @color0;
+@define-color text @color7;
+@define-color highlight @color13;
+@define-color warning @color11;
+@define-color critical @color9;
+@define-color accent @color4;
+@define-color success @color10;
+@define-color inactive @color3;
+@define-color muted @color15;
+
+/* General Waybar styling */
+window#waybar {
+    background: rgba(14, 13, 13, 0.75);
+    color: @text;
+    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free";
+    font-size: 14px;
+    transition: background 0.2s ease;
+    margin: 5px 5px 0 5px;
+}
+
+/* Modules: Unified appearance */
+#workspaces,
+#mode,
+#clock,
+#pulseaudio,
+#network,
+#cpu,
+#memory,
+#battery,
+#tray,
+#custom-power {
+    padding: 0 12px;
+    margin: 5px 2px;
+    border-radius: 8px;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+/* Workspaces styling */
+#workspaces button {
+    color: @inactive;
+    font-size: 16px;
+    padding: 0 6px;
+    margin: 0 3px;
+    background: transparent;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+
+#workspaces button.active {
+    color: @highlight;
+    font-weight: bold;
+    border-bottom: 2px solid @highlight;
+}
+
+#workspaces button.urgent {
+    color: @critical;
+    border-bottom: 2px solid @critical;
+}
+
+#workspaces button:hover {
+    color: @muted;
+    border-bottom: 2px solid @muted;
+}
+
+/* Clock module */
+#clock {
+    color: @text;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Network module */
+#network {
+    color: @accent;
+}
+#network.disconnected {
+    color: @critical;
+    opacity: 0.7;
+}
+
+/* Audio module */
+#pulseaudio {
+    color: @accent;
+}
+#pulseaudio.muted {
+    color: @critical;
+    opacity: 0.7;
+}
+
+/* CPU & Memory */
+#cpu,
+#memory {
+    color: @accent;
+}
+
+/* Custom tooltip styling */
+tooltip {
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 8px;
+    border: 1px solid @inactive;
+}
+
+tooltip label {
+    color: @text;
+    padding: 6px;
+}
+
+/* Pulse animation for alerts */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Tray menu styling */
+#tray menu {
+    background: rgba(14, 13, 13, 0.9);
+    border: 1px solid @inactive;
+    border-radius: 8px;
+}
+
+/* Power button */
+#custom-power {
+    color: @highlight;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* Wallpaper buttons */
+#custom-wallpaper-random,
+#custom-wallpaper-favorite {
+    min-width: 30px;
+}
