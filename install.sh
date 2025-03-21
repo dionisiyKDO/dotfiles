@@ -7,7 +7,7 @@ BACKUP_DIR="$HOME/Desktop/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 # List of files and their target locations
 declare -A FILES_TO_SYMLINK=(
     # ["nix"]="$HOME/.config/nix"
-    ["hyprland"]="$HOME/.config/hypr"
+    ["hypr"]="$HOME/.config/hypr"
     ["waybar"]="$HOME/.config/waybar"
     ["alacritty"]="$HOME/.config/alacritty"
 
