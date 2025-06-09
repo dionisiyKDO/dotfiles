@@ -12,26 +12,10 @@
 @define-color muted @color15;
 
 /* #region General Waybar styling */
-
-/* 
-#clock #tray,
-    #custom-wallpaper-random,
-    #custom-wallpaper-favorite,
-    or #scripts
-#taskbar,
-#language,
-#network,
-#memory,
-#cpu,
-#pulseaudio,
-#custom-power {
-} 
-*/
-
 * {
-    font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free";
-    font-weight: bold;
-    font-size: 14px;
+	font-family: "Segoe UI", "Ubuntu", "JetBrainsMono Nerd Font", "Font Awesome 6 Free";
+    font-weight: 600;
+    font-size: 12.7px;
     color: @text;
 }
 
@@ -50,14 +34,32 @@ window#waybar {
 #pulseaudio:hover,
 #custom-power:hover,
 #workspaces:hover {
-    transition: all 0.3s ease;
+    transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
     color: @muted;
 }
 
 /* #endregion */
 
-/* #region background on regions */ 
+/* #region background */ 
 
+/* background full bar */
+window#waybar {
+    border-bottom: 2px solid @highlight;
+    background: alpha(@background, 0.8);
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 8px;
+}
+
+/* If custom-power is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #pulseaudio {
+    margin-right: 8px;
+}
+
+/* background on regions */ 
+/* #region */
 /* .modules-left,
 .modules-center,
 .modules-right {
@@ -83,11 +85,11 @@ window#waybar {
     color: @text;
     padding: 0 2px;
 } */
-
 /* #endregion */
 
-/* #region background on modules */
-.modules-left,
+/* background on modules */
+/* #region */
+/* .modules-left,
 .modules-center,
 .modules-right {
     margin: 5px 5px 0 5px;
@@ -108,33 +110,151 @@ window#waybar {
     border-radius: 7px;
     border: 2px solid @highlight;
     background: alpha(@background, 0.8);
+} */
+/* #endregion */
+
+/* #endregion */
+
+/* #region Tooltip */
+tooltip {
+    background: alpha(@background, 0.9);
+    border-radius: 5px;
+    border: 1px solid @highlight;
+    color: @color7;
+}
+tooltip label{
+  color: @content_main;
+}
+/* #endregion */
+
+/* #region Tray styling */
+#tray{
+    all: unset;
+}
+#tray{
+    border-top: 2px solid rgba(158, 158, 158, 0.25);   
+    padding-left: 6px; 
+    padding-right: 6px; 
+    margin-left: 5px;
+    margin-right: 15px;
+}
+#tray > .passive {
+	border-top: none;
+}
+#tray > .active {
+}
+#tray > .needs-attention {
+	border-top: 1px solid @highlight;
+}
+#tray > widget {
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+#tray > widget:hover {
+	border-top: 1px solid @muted;
+}
+/* #endregion */
+
+/* #region Workspaces styling */
+#workspaces {
+    all: unset;
+}
+#workspaces button {
+    all: unset;
 }
 
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
+#workspaces {
+    color: transparent;
+    padding: 0 6px;
+    margin: 0 3px;
 }
 
-/* If custom-power is the rightmost module, omit right margin */
-.modules-right > widget:last-child > #custom-power {
-    margin-right: 0;
+#workspaces button {
+    padding: 2px 6px;
+    color: @inactive;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    background: transparent;
+    border-top: 2px solid transparent;
+}
+#workspaces button:hover {
+    border-top: 2px solid @muted;
+}
+
+#workspaces button.active {
+	color: @text;
+	border-top: 2px solid @highlight;
+}
+#workspaces button.focused {
+    color: @accent;
+}
+#workspaces button.urgent {
+	background:  rgba(255, 0, 0, 0.25);
+	border-top: 3px dashed @critical;
+	color: @critical;
 }
 
 /* #endregion */
 
-
-/* #region Min-width configs */
-#custom-power {
-    padding-right: 5px;
+/* #region Taskbar styling */
+#taskbar {
+    all: unset;
+}
+#taskbar button {
+    all: unset;
+}
+#taskbar {
+    margin: 0 4px;
 }
 
-#scripts {
-    padding-right: 7px;
-    min-width: 20px;
+#taskbar button {
+	min-width: 16px;
+    border-radius: 0;
+	border-top: 2px solid rgba(158, 158, 158, 0.25);
+	margin-left: 2px;
+	margin-right: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    color: white;
+	transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+#taskbar button.active {
+	border-top: 2px solid @highlight;
+}
+
+#taskbar button:hover {
+	border-top: 2px solid @muted;
+}
+/* #endregion */
+
+/* #region Min-width, paddings, margins Right Module configs */
+#custom-power, #scripts, #network,
+#memory, #cpu, #disk, #pulseaudio,
+#language {
+    margin-left: 6px;
+	border-top: 2px solid rgba(158, 158, 158, 0.25);
 }
 
 #network {
-    padding-right: 6px;
+    font-size: 16px;
+	padding-left: 0px;
+    padding-right: 3px;
+}
+#language {
+    font-size: 14px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#custom-power {
+    padding-right: 15px;
+}
+
+#scripts {
+    padding-right: 17px;
+    min-width: 20px;
 }
 
 #memory,
@@ -142,47 +262,44 @@ window#waybar {
     min-width: 75px;
 }
 
+#disk {
+    min-width: 60px;
+}
+
 #pulseaudio {
-    min-width: 70px;
+    min-width: 75px;
 }
 
 /* #endregion */
 
 
-/* #region Workspaces styling */
-#workspaces button {
-    color: @inactive;
-    padding: 0 6px;
-    margin: 0 3px;
-    background: transparent;
-    border-bottom: 2px solid transparent;
-    border-radius: 0;
-}
 
-#workspaces button.active {
-    color: @highlight;
-    border-bottom: 2px solid @highlight;
-}
 
-#workspaces button.urgent {
-    color: @critical;
-    border-bottom: 2px solid @critical;
-}
 
-#workspaces button:hover {
-    color: @inactive;
-    border-bottom: 2px solid @muted;
-}
 
-#taskbar button:hover {
-    transition: all 0.3s ease;
-}
 
-/* #endregion */
 
-tooltip {
-    background: alpha(@background, 0.9);
-    border-radius: 8px;
-    border: 1px solid @inactive;
-    color: @color7;
-}
+
+
+
+
+
+/* All classes / ids
+.modules-left,
+.modules-center,
+.modules-right
+
+#workspaces,
+#taskbar,
+
+#clock, 
+#tray,
+#scripts,
+    or #custom-wallpaper-random, #custom-wallpaper-favorite,
+#language,
+#network,
+#memory,
+#cpu,
+#pulseaudio,
+#custom-power,
+*/
