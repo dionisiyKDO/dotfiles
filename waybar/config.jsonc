@@ -2,7 +2,7 @@
   {
     "layer": "top",
     "position": "top",
-    "height": 45,
+    "height": 32,
     "output": "DP-2",
     "include": "~/.config/waybar/modules.jsonc",
     "modules-left": [
@@ -20,15 +20,16 @@
       "hyprland/language",
       "network",
       "memory",
+      "disk",
       "cpu",
-      "pulseaudio",
-      "custom/power"
+      "pulseaudio"
+      // "custom/power"
     ],
   },
   {
     "layer": "top",
     "position": "top",
-    "height": 40,
+    "height": 32,
     "output": "HDMI-A-1",
     "include": "~/.config/waybar/modules.jsonc",
     "modules-left": [
@@ -42,8 +43,8 @@
       "tray",
       "group/scripts",
       "hyprland/language",
-      "pulseaudio",
-      "custom/power",
+      "pulseaudio"
+      // "custom/power"
     ],
   },
 ]

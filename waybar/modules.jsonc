@@ -1,17 +1,15 @@
 {
   "wlr/taskbar": {
     "format": "{icon}",
-    "icon-size": 18,
+    "icon-size": 16,
+    "icon-theme": "Numix-Circle",
+    "tooltip-format": "{title}",
     "all-outputs": false,
-    "tooltip-format": "{app_id}",
     "on-click": "activate",
     "on-click-middle": "close",
     "ignore-list": [
       "rofi",
       "Alacritty"
-      // "Spotify",
-      // "firefox",
-      // "zen",
     ]
   },
   "hyprland/workspaces": {
@@ -78,8 +76,8 @@
 	},
 
   "tray": {
-    "icon-size": 14,
-    "spacing": 10
+    "icon-size": 16,
+    "spacing": 5
   },
   "hyprland/language": {
     "format": "{short}"
@@ -100,11 +98,18 @@
     },
     "interval": 3
   },
+  "disk": {
+      "interval": 30,
+      "format": "󰋊 {percentage_used}%",
+      "path": "/",
+      "tooltip": true,
+      "unit": "GB",
+      "tooltip-format":  "Available {free} of {total}"
+  },
   "network": {
-    "format-ethernet": "󰈀 ",
+    "format-ethernet": "  ",
     "format-disconnected": "",
     "tooltip-format": "{bandwidthDownBits}",
-    // "tooltip": false,
     "interval": 3
   },
   "pulseaudio": {
