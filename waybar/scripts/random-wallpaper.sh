@@ -31,4 +31,4 @@ source ~/.cache/wal/colors.sh
 # pkill waybar
 # waybar &
 pkill -SIGUSR2 waybar &
-notify-send "Wallpaper Changed" "Set to: $(basename "$RANDOM_WALLPAPER")" -i "$RANDOM_WALLPAPER"
+notify-send "Wallpaper Changed" "$(basename "$RANDOM_WALLPAPER")" -i "$RANDOM_WALLPAPER"
