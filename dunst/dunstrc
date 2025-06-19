@@ -1,0 +1,64 @@
+# ~/.config/dunst/dunstrc
+# Semi‑transparent background (90% opacity) while keeping text fully opaque.
+# Notifications from Spotify are limited to two lines (song title + artist)
+# and display a fixed‑size album art thumbnail.
+
+[global]
+monitor = 1                    # Which monitor to show on
+geometry = "1500x5-10+10"       # WidthxLines‑XOffset+YOffset
+font = "Monospace 10"
+line_height = 2                # Extra spacing between lines
+separator_color = frame
+padding = 8
+horizontal_padding = 10
+# Window‑wide alpha (0 = fully opaque, 100 = fully transparent).
+# 10 gives ~90 % visible background – tweak to taste.
+transparency = 60
+corner_radius = 10
+frame_width = 1
+frame_color = "#4c566a"
+icon_position = left           # Put album art on the left
+max_icon_size = 32             # Fixed square thumbnail
+markup = full                  # Allow <b>, <i>, etc. in format strings
+word_wrap = yes
+max_lines = 4
+ignore_newline = no            # Preserve explicit \n in format strings
+ellipsize = middle             # Trim the middle if text is too long
+
+# ── Urgency levels ────────────────────────────────────────────────────────────
+# Using RGB values here keeps foreground 100 % opaque. The transparency value
+# above still applies to the window; text itself will remain solid.
+[urgency_low]
+background = "#000000"         # Nord polar night
+foreground = "#eceff4"
+timeout = 5
+
+[urgency_normal]
+background = "#000000"
+foreground = "#eceff4"
+timeout = 7
+
+[urgency_critical]
+background = "#bf616a"
+foreground = "#eceff4"
+timeout = 0                   # Stays until dismissed
+
+# ── Rules ────────────────────────────────────────────────────────────────────
+# Generic rule for images shown in Firefox (your existing example preserved)
+[rule_browser_images]
+appname = "Firefox"
+icon = "image-*"
+fullscreen = false
+format = "<b>%s</b>\n%b"
+
+# Spotify: show exactly two lines (song title on 1st, artist on 2nd) and a
+# 64×64 album cover. Dunst receives the album art via the notification icon.
+[rule_spotify]
+appname = "Spotify"
+fullscreen = false
+max_icon_size = 32
+max_lines = 4
+# %s → summary (usually track), %b → body (usually artist/album)
+format = "<b>%s</b>\n%b"
+# Increase timeout a bit for readability
+timeout = 10
