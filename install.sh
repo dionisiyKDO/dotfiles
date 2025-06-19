@@ -8,11 +8,18 @@ BACKUP_DIR="$HOME/Desktop/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 declare -A FILES_TO_SYMLINK=(
     # ["nix"]="$HOME/.config/nix"
     ["hypr"]="$HOME/.config/hypr"
+    ["swaylock"]="$HOME/.config/swaylock"
     ["waybar"]="$HOME/.config/waybar"
     ["alacritty"]="$HOME/.config/alacritty"
+    ["rofi"]="$HOME/.config/rofi"
+    ["tofi"]="$HOME/.config/tofi"
+    ["dunst"]="$HOME/.config/dunst"
+
+    ["scripts"]="$HOME/scripts"
 
     # [".oh-my-zsh/custom"]="$HOME/.oh-my-zsh/custom"
     [".zshrc"]="$HOME/.zshrc"
+    [".zprofile"]="$HOME/.zprofile"
 )
 
 # Create backup directory
