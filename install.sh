@@ -14,6 +14,7 @@ declare -A FILES_TO_SYMLINK=(
     ["rofi"]="$HOME/.config/rofi"
     ["tofi"]="$HOME/.config/tofi"
     ["dunst"]="$HOME/.config/dunst"
+    ["quickshell"]="$HOME/.config/quickshell"
 
     ["scripts"]="$HOME/scripts"
 
