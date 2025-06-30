@@ -30,6 +30,13 @@ Scope {
                 right: true
             }
 
+            // Enable layer-shell for proper compositor integration
+
+            // Background with black transparency
+            Rectangle {
+                anchors.fill: parent
+                color: "#000000" // Black background
+            }
 
             Item {
                 id: child
@@ -42,6 +49,7 @@ Scope {
 
                 Text {
                     id: text
+                    color: "white"
 
                     anchors.right: clock.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -53,6 +61,7 @@ Scope {
 
                 ClockWidget {
                     id: clock
+                    color: "white"
 
                     anchors.centerIn: parent
                     anchors.rightMargin: Appearance.spacing.large
