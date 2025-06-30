@@ -187,11 +187,6 @@ tooltip label{
 #workspaces button.focused {
     color: @accent;
 }
-#workspaces button.urgent {
-	background:  rgba(255, 0, 0, 0.25);
-	border-top: 3px dashed @critical;
-	color: @critical;
-}
 
 /* #endregion */
 
