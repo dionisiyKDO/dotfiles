@@ -1,6 +1,7 @@
 import Quickshell
+import "root:/modules"
 
 Scope {
     Bar{}
-    // Corners{}
+    VolumeSlider{}
 }
