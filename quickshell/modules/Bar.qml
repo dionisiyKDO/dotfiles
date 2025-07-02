@@ -2,11 +2,10 @@ import Quickshell
 import QtQuick
 import Quickshell.Wayland
 import "root:/config"
+import "root:/widgets"
 
 
 Scope {
-  // no more time object
-
     Variants {
         model: Quickshell.screens // for each screan in Quickshell.screens create PanelWindow
         
@@ -30,12 +29,9 @@ Scope {
                 right: true
             }
 
-            // Enable layer-shell for proper compositor integration
-
-            // Background with black transparency
             Rectangle {
                 anchors.fill: parent
-                color: "#000000" // Black background
+                color: "#000000"
             }
 
             Item {
@@ -75,7 +71,6 @@ Scope {
                 //     anchors.bottom: clock.top
                 //     anchors.bottomMargin: Appearance.spacing.larger
                 // }
-
             }
         }
     }
