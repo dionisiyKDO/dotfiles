@@ -3,6 +3,8 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Wayland
 
+import "root:/widgets"
+
 ShellRoot {
     Variants {
         model: Quickshell.screens
@@ -93,21 +95,19 @@ ShellRoot {
                             to: 1.0
                             value: 0.5
                             
-                            background: Rectangle {
-                                x: volumeSlider.leftPadding + volumeSlider.availableWidth / 2 - width / 2
-                                y: volumeSlider.topPadding
-                                implicitWidth: 4
-                                implicitHeight: 200
-                                width: implicitWidth
-                                height: volumeSlider.availableHeight
-                                color: "#404040"
-                                radius: 2
-                                
-                                Rectangle {
-                                    width: parent.width
-                                    height: volumeSlider.visualPosition * parent.height
-                                    color: "#00aaff"
-                                    radius: 2
+                            background: StyledRect {
+                                color: Colours.alpha(Colours.palette.m3surfaceContainer, true)
+                                radius: Appearance.rounding.full
+
+                                StyledRect {
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+
+                                    y: root.handle.y
+                                    implicitHeight: parent.height - y
+
+                                    color: Colours.alpha(Colours.palette.m3secondary, true)
+                                    radius: Appearance.rounding.full
                                 }
                             }
                             
