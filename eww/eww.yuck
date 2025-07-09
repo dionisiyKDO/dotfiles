@@ -1,0 +1,42 @@
+(defvar foo "initial value")
+
+
+
+
+
+
+(defwindow example
+           ; ... values omitted
+  ; (greeter :text "Say hello!"
+  ;          :name "Tim")
+  (labeled-container :name foo
+    (button :onclick "notify-send hey ho"
+        "click me"))
+)
+
+
+
+(defwidget greeter [?text name]
+    (box :orientation "horizontal"
+        :halign "center"
+    text
+    (button :onclick "notify-send 'Hello' 'Hello, ${name}'"
+        "Greet")))
+
+
+
+
+
+
+(defwidget labeled-container [name]
+  (box :class "container"
+    name
+    (children)))
+
+
+
+
+(defwidget two-boxes []
+  (box
+    (box :class "first" (children :nth 0))
+    (box :class "second" (children :nth 1))))
