@@ -1,4 +1,4 @@
-import "root:/utils"
+import "root:/services"
 import QtQuick
 
 Text {
