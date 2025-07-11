@@ -25,8 +25,10 @@ Scope {
                 color: "#000000"
             }
 
+            // **Left** 
+            //      Window title/class
             Item {
-                id: window_title_class
+                id: left
 
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -54,8 +56,10 @@ Scope {
                 }
             }
 
+            // **Center** 
+            //      Clock
             Item {
-                id: child
+                id: center
 
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
@@ -86,7 +90,41 @@ Scope {
                     anchors.rightMargin: Appearance.spacing.large
                     anchors.leftMargin: Appearance.spacing.large
                 }
+            }
 
+
+            // **Right** 
+            //      Window title/class
+            Item {
+                id: right
+
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.rightMargin: Appearance.spacing.small
+                implicitHeight: 30
+
+                Text {
+                    id: rclss
+                    color: "white"
+                    font.pixelSize: 10
+
+                    anchors.right: parent.right
+
+                    text: ToplevelManager.activeToplevel?.appId ?? qsTr("Desktop")
+                }
+
+                Text {
+                    id: rtitle
+                    color: "white"
+                    font.pixelSize: 14
+                    
+                    anchors.top: rclss.bottom
+                    anchors.right: parent.right
+                    anchors.topMargin: -3
+
+                    text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
+                }
                 // Tray {
                 //     id: tray
 
