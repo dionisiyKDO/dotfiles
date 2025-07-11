@@ -1,8 +1,10 @@
 import Quickshell
 import QtQuick
 import Quickshell.Wayland
+import Quickshell.Io
 import "root:/config"
 import "root:/widgets"
+import "root:/modules"
 
 
 Scope {
@@ -36,23 +38,28 @@ Scope {
                 anchors.leftMargin: Appearance.spacing.small
                 implicitHeight: 30
 
-                Text {
-                    id: clss
-                    color: "white"
-                    font.pixelSize: 10
 
-                    text: ToplevelManager.activeToplevel?.appId ?? qsTr("Desktop")
-                }
 
-                Text {
-                    id: title
-                    color: "white"
-                    font.pixelSize: 14
+                // Text {
+                //     id: clss
+                //     color: "white"
+                //     font.pixelSize: 10
+
+                //     text: ToplevelManager.activeToplevel?.appId ?? qsTr("Desktop")
+                // }
+
+                // Text {
+                //     id: title
+                //     color: "white"
+                //     font.pixelSize: 14
                     
-                    anchors.top: clss.bottom
-                    anchors.topMargin: -3
+                //     anchors.top: clss.bottom
+                //     anchors.topMargin: -3
 
-                    text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
+                //     text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
+                // }
+                WindowTitle {
+                    anchors.left: parent.left
                 }
             }
 
@@ -94,7 +101,7 @@ Scope {
 
 
             // **Right** 
-            //      Window title/class
+            //      Language
             Item {
                 id: right
 
@@ -104,34 +111,10 @@ Scope {
                 anchors.rightMargin: Appearance.spacing.small
                 implicitHeight: 30
 
-                Text {
-                    id: rclss
-                    color: "white"
-                    font.pixelSize: 10
-
+                LanguageIndicator {
                     anchors.right: parent.right
-
-                    text: ToplevelManager.activeToplevel?.appId ?? qsTr("Desktop")
+                    anchors.verticalCenter: parent.verticalCenter
                 }
-
-                Text {
-                    id: rtitle
-                    color: "white"
-                    font.pixelSize: 14
-                    
-                    anchors.top: rclss.bottom
-                    anchors.right: parent.right
-                    anchors.topMargin: -3
-
-                    text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
-                }
-                // Tray {
-                //     id: tray
-
-                //     anchors.horizontalCenter: parent.horizontalCenter
-                //     anchors.bottom: clock.top
-                //     anchors.bottomMargin: Appearance.spacing.larger
-                // }
             }
         }
     }
