@@ -13,15 +13,6 @@ Scope {
             property var modelData // screen from the screens list will be injected into this property
             screen: modelData // set the the screen on which it is shown as the injected screen, so it creates bar for each screen
 
-            // left bar
-            // implicitWidth: 30
-            // anchors {
-            //     top: true
-            //     left: true
-            //     bottom: true
-            // }
-
-            // top bar
             implicitHeight: 32
             anchors {
                 top: true
@@ -49,7 +40,6 @@ Scope {
                     font.pixelSize: 10
 
                     text: ToplevelManager.activeToplevel?.appId ?? qsTr("Desktop")
-                    // text: "class"
                 }
 
                 Text {
@@ -61,7 +51,6 @@ Scope {
                     anchors.topMargin: -3
 
                     text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
-                    // text: "Title"
                 }
             }
 
