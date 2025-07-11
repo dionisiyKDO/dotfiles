@@ -4,7 +4,8 @@
 # and display a fixed‑size album art thumbnail.
 
 [global]
-monitor = 1                    # Which monitor to show on
+monitor = 1                    # For hyprland main monitor
+# monitor = 0                    # For niri main monitor
 geometry = "1500x5-10+10"       # WidthxLines‑XOffset+YOffset
 font = "Monospace 10"
 line_height = 2                # Extra spacing between lines
