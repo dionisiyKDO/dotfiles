@@ -1,5 +1,6 @@
 environment {
     ELECTRON_OZONE_PLATFORM_HINT "auto"
+    DISPLAY ":0"
     //QT_QPA_PLATFORMTHEME "qt6ct"
     //QT_STYLE_OVERRIDE "kvantum"
     //GDK_SCALE "1.5"
@@ -21,7 +22,7 @@ overview {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 input {
     focus-follows-mouse
-    workspace-auto-back-and-forth
+    //  workspace-auto-back-and-forth
 
     keyboard {
         xkb {
@@ -85,6 +86,16 @@ input {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
 // Remember to uncomment the node by removing "/-"!
+output "DP-2" {
+    focus-at-startup
+    mode "1920x1080"
+
+    scale 1
+
+    transform "normal"
+
+    // position x=1280 y=0
+}
 output "HDMI-A-1" {
     // Uncomment this line to disable this output.
     // off
@@ -115,15 +126,7 @@ output "HDMI-A-1" {
     // automatically.
     position x=0 y=0
 }
-output "DP-2" {
-    mode "1920x1080"
 
-    scale 1
-
-    transform "normal"
-
-    // position x=1280 y=0
-}
 
 
 // Settings that influence how windows are positioned and sized.
@@ -131,8 +134,9 @@ output "DP-2" {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 10
+    gaps 0
     background-color "transparent"
+    always-center-single-column
 
     center-focused-column "never"
     preset-column-widths {
@@ -142,7 +146,7 @@ layout {
     }
 
     default-column-width { proportion 0.5; }
-    
+
     focus-ring {
         off
     }
@@ -160,8 +164,17 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 
+spawn-at-startup "xwayland-satellite"
+
+
 // This line starts waybar, a commonly used bar for Wayland compositors.
 spawn-at-startup "waybar"
+spawn-at-startup "aw-qt"
+spawn-at-startup "clipse" "-listen"
+spawn-at-startup "dunst"
+spawn-at-startup "swww-daemon"
+// spawn-at-startup "swww" "img" "~/wallpapers/default.jpg"
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -250,6 +263,11 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "rofi" "-show" "drun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+
+
+
+    // Mod+W { spawn "pkill" "-SIGUSR1" "waybar" "&"; }
+    Mod+Shift+S { spawn "grim" "-g" "$(slurp)"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
@@ -456,7 +474,7 @@ binds {
     // Toggle tabbed column display mode.
     // Windows in this column will appear as vertical tabs,
     // rather than stacked on top of each other.
-    Mod+W { toggle-column-tabbed-display; }
+    // Mod+W { toggle-column-tabbed-display; }
 
     // Actions to switch layouts.
     // Note: if you uncomment these, make sure you do NOT have
