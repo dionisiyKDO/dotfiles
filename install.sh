@@ -15,6 +15,8 @@ declare -A FILES_TO_SYMLINK=(
     ["tofi"]="$HOME/.config/tofi"
     ["dunst"]="$HOME/.config/dunst"
     ["quickshell"]="$HOME/.config/quickshell"
+    ["eww"]="$HOME/.config/eww"
+    ["niri"]="$HOME/.config/niri"
 
     ["scripts"]="$HOME/scripts"
 
