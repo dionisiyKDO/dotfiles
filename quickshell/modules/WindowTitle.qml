@@ -31,6 +31,10 @@ Item {
         anchors.left: parent.left
         anchors.topMargin: -3
 
+        width: 500
+        clip: true                     // Hide overflowing text visually
+        elide: Text.ElideRight         // show "..." at the end if text is too long
+
         text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
     }
 }
