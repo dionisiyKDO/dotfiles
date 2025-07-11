@@ -15,6 +15,7 @@ if [[ -z "$RANDOM_WALLPAPER" ]]; then
     exit 1
 fi
 
+RANDOM_WALLPAPER=~/Pictures/Wallpapers/SFW/fav.png
 
 
 # Change wallpaper with swww and transition effect
