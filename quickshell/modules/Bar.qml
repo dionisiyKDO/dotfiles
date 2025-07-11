@@ -22,7 +22,7 @@ Scope {
             // }
 
             // top bar
-            implicitHeight: 30
+            implicitHeight: 32
             anchors {
                 top: true
                 left: true
@@ -35,6 +35,37 @@ Scope {
             }
 
             Item {
+                id: window_title_class
+
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.leftMargin: Appearance.spacing.small
+                implicitHeight: 30
+
+                Text {
+                    id: clss
+                    color: "white"
+                    font.pixelSize: 10
+
+                    text: ToplevelManager.activeToplevel?.appId ?? qsTr("Desktop")
+                    // text: "class"
+                }
+
+                Text {
+                    id: title
+                    color: "white"
+                    font.pixelSize: 14
+                    
+                    anchors.top: clss.bottom
+                    anchors.topMargin: -3
+
+                    text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
+                    // text: "Title"
+                }
+            }
+
+            Item {
                 id: child
 
                 anchors.top: parent.top
@@ -43,17 +74,20 @@ Scope {
                 
                 implicitHeight: 30
 
-                Text {
-                    id: text
-                    color: "white"
 
-                    anchors.right: clock.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.rightMargin: Appearance.spacing.large
-                    anchors.leftMargin: Appearance.spacing.large
+                
+                // Anchor to the left od the clock
+                // Text {
+                //     id: text
+                //     color: "white"
 
-                    text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
-                }
+                //     anchors.right: clock.left
+                //     anchors.verticalCenter: parent.verticalCenter
+                //     anchors.rightMargin: Appearance.spacing.large
+                //     anchors.leftMargin: Appearance.spacing.large
+
+                //     text: ToplevelManager.activeToplevel?.title ?? qsTr("Desktop")
+                // }
 
                 ClockWidget {
                     id: clock
