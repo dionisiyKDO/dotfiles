@@ -13,13 +13,16 @@ Item {
 
     Text {
         id: label
-        text: layoutText
+
+        color: "white"
         font.bold: true
         font.pointSize: 12
+
         anchors.fill: parent
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        color: "white"
+
+        text: layoutText
     }
 
     Process {
