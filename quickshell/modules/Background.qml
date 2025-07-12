@@ -26,6 +26,5 @@ PanelWindow {
         source: Settings.currentWallpaper !== "" ? Settings.currentWallpaper : "/home/dionisiy/Pictures/Wallpapers/SFW/fav.png"
         cache: true
         smooth: true
-        opacity: 0.8  // TEMPORARY to confirm it's being drawn
     }
 }
