@@ -1,14 +1,16 @@
 import Quickshell
-import Quickshell.Services.Pipewire
+import QtQuick
 import "root:/modules"
-import "root:/Layout" as Layout
+
+
 
 Scope {
-    id: root
+    Variants {
+        model: Quickshell.screens
 
-    // property var defaultAudioSink: Pipewire.defaultAudioSink
-
-    HorizontalBar{}
-    // VerticalBar{}
-    // VolumeSlider{}
+        ScreenShell {
+            property var modelData  // 👈 you MUST declare this
+            screenModel: modelData  // ✅ now it's valid
+        }
+    }
 }
