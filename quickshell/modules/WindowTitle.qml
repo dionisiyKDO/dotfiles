@@ -7,6 +7,9 @@ import Quickshell.Wayland
 Item {
     id: root
 
+    implicitWidth: (appid.implicitWidth > title.implicitWidth) ? appid.implicitWidth : title.implicitWidth
+    implicitHeight: (appid.implicitHeight > title.implicitHeight) ? appid.implicitHeight : title.implicitHeight
+
     Text {
         id: appid
 
