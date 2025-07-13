@@ -124,3 +124,14 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export PATH=$PATH:/home/dionisiy/.spicetify
+
+
+
+cd() {
+  case "$1" in
+    dev) builtin cd /home/dionisiy/Desktop/dev ;;
+    # vids) builtin cd /home/dionisiy/Videos ;;
+    # dl) builtin cd ~/Downloads ;;
+    # *) builtin cd "$@" ;;
+  esac
+}
