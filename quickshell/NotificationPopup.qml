@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
+import Quickshell.Io
 import "root:/config"
 
 PanelWindow {
@@ -19,74 +20,93 @@ PanelWindow {
     margins.top: 6
     margins.right: 6 
 
-    // Assigning notifications to preffered screen by name
-    Component.onCompleted: {
-        // console.log(Quickshell.screens)
-        // console.log(Quickshell.screens[0])
-        // console.log(Quickshell.screens[0].name)
-
-        const targetName = "DP-2"
-        // const targetName = "HDMI-A-1"
-        for (let i = 0; i < Quickshell.screens.length; ++i) {
-            let screen = Quickshell.screens[i];
-            if (screen.name === targetName) {
-                console.log("Assigning notifications to screen:", screen)
-                window.screen = screen 
-                return
-            }
-        }
-        console.warn("Screen", targetName, "not found in Quickshell.screens")
-    }
-
+    // Configuration
+    readonly property int maxVisible: 10
+    readonly property int spacing: 5
+    readonly property int notificationTimeout: 4000
+    readonly property string targetScreenName: "DP-2" // "HDMI-A-1"  "DP-2"
+    
+    // Models and data
     ListModel {
         id: notificationModel
     }
 
-    property int maxVisible: 5
-    property int spacing: 5
+    // Screen assignment - find target screen by name
+    function assignToTargetScreen() {
+        for (let i = 0; i < Quickshell.screens.length; ++i) {
+            const screen = Quickshell.screens[i];
+            if (screen.name === targetScreenName) {
+                console.log("Assigning notifications to screen:", screen);
+                window.screen = screen;
+                return;
+            }
+        }
+        console.warn(`Screen "${targetScreenName}" not found in Quickshell.screens`);
+    }
 
+    // Notification management
     function addNotification(notification) {
         notificationModel.insert(0, {
             id: notification.id,
             appName: notification.appName || "Notification",
             summary: notification.summary || "",
             body: notification.body || "",
-            rawNotification: notification,
-            appeared: false,
-            dismissed: false
+            rawNotification: notification
         });
 
-        console.log(notification)
-
+        // Remove excess notifications
         while (notificationModel.count > maxVisible) {
             notificationModel.remove(notificationModel.count - 1);
         }
     }
 
     function dismissNotificationById(id) {
-        for (var i = 0; i < notificationModel.count; i++) {
-            if (notificationModel.get(i).id === id) {
-                dismissNotificationByIndex(i);
+        for (let i = 0; i < notificationModel.count; i++) {
+            const item = notificationModel.get(i);
+            if (item.id === id) {
+                notificationRepeater.itemAt(i)?.dismiss();
                 break;
             }
         }
     }
 
-    function dismissNotificationByIndex(index) {
-        if (index >= 0 && index < notificationModel.count) {
-            var notif = notificationModel.get(index);
-            if (!notif.dismissed) {
-                notificationModel.set(index, {
-                    id: notif.id,
-                    appName: notif.appName,
-                    summary: notif.summary,
-                    body: notif.body,
-                    rawNotification: notif.rawNotification,
-                    appeared: notif.appeared,
-                    dismissed: true
-                });
+    // Get valid icon source from notification
+    function getIconSource(rawNotification) {
+        const sources = [
+            rawNotification?.image || "",
+            rawNotification?.appIcon || "",
+            rawNotification?.icon || ""
+        ];
+
+        
+
+        for (const icon of sources) {
+            if (!icon) continue;
+            if (icon.includes("?path=")) {
+                const [name, path] = icon.split("?path=");
+                const fileName = name.substring(name.lastIndexOf("/") + 1);
+                return `file://${path}/${fileName}`;
             }
+
+            if (icon.startsWith('/')) {
+                return "file://" + icon;
+            }
+            
+            return icon;
         }
+        return "";
+    }
+
+    Component.onCompleted: {
+        assignToTargetScreen()
+    }
+    
+
+    // Debug send notification
+    Process {
+        id: debugProcess
+        command: ["notify-send", "yo", "https://github.com/dionisiyKDO", "--app-name=GitHub"]
+        running: true
     }
 
     Column {
@@ -100,197 +120,33 @@ PanelWindow {
             id: notificationRepeater
             model: notificationModel
 
-            delegate: Rectangle {
-                id: notificationDelegate
+            delegate: NotificationDelegate {
+                id: delegate
                 width: parent.width
-                color: Theme.backgroundPrimary
-                radius: 0
                 
-                border.color : "red"
-                border.pixelAligned : true
-                border.width : 3
-
-                property bool appeared: model.appeared
-                property bool dismissed: model.dismissed
-                property var rawNotification: model.rawNotification
-
+                // Data properties
+                appName: model.appName
+                summary: model.summary
+                body: model.body
+                rawNotification: model.rawNotification
                 
-
-                x: appeared ? 0 : width
-                opacity: dismissed ? 0 : 1
-                height: dismissed ? 0 : contentRow.height + 20
-
-                Row {
-                    id: contentRow
-                    anchors.centerIn: parent
-                    spacing: 10
-                    width: parent.width - 20
-
-                    // Circular Icon container with border
-                    Rectangle {
-                        id: iconBackground
-                        width: 36
-                        height: 36
-                        radius: width / 2   // Circular
-                        color: Theme.accentPrimary
-                        anchors.verticalCenter: parent.verticalCenter
-                        border.color: Qt.darker(Theme.accentPrimary, 1.2)
-                        border.width: 1.5
-
-                        // Get all possible icon sources from notification
-                        property var iconSources: [
-                            rawNotification?.image || "",
-                            rawNotification?.appIcon || "",
-                            rawNotification?.icon || ""
-                        ]
-
-                        // Try to load notification icon
-                        Image {
-                            id: iconImage
-                            anchors.fill: parent
-                            anchors.margins: 4
-                            fillMode: Image.PreserveAspectFit
-                            smooth: true
-                            cache: false
-                            asynchronous: true
-                            sourceSize.width: 36
-                            sourceSize.height: 36
-                            source: {
-                                for (var i = 0; i < iconBackground.iconSources.length; i++) {
-                                    var icon = iconBackground.iconSources[i];
-                                    if (!icon) continue;
-
-                                    if (icon.includes("?path=")) {
-                                        const [name, path] = icon.split("?path=");
-                                        const fileName = name.substring(name.lastIndexOf("/") + 1);
-                                        return `file://${path}/${fileName}`;
-                                    }
-
-                                    if (icon.startsWith('/')) {
-                                        return "file://" + icon;
-                                    }
-
-                                    return icon;
-                                }
-                                return "";
-                            }
-                            visible: status === Image.Ready && source.toString() !== ""
-                        }
-
-                        // Fallback to first letter of app name
-                        Text {
-                            anchors.centerIn: parent
-                            visible: !iconImage.visible
-                            text: model.appName ? model.appName.charAt(0).toUpperCase() : "?"
-                            font.family: Theme.fontFamily
-                            font.pixelSize: Theme.fontSizeBody
-                            font.bold: true
-                            color: Theme.backgroundPrimary
-                        }
-                    }
-
-                    Column {
-                        width: contentRow.width - iconBackground.width - 10
-                        spacing: 5
-
-                        Text {
-                            text: model.appName
-                            width: parent.width
-                            color: Theme.textPrimary
-                            font.family: Theme.fontFamily
-                            font.bold: true
-                            font.pixelSize: Theme.fontSizeSmall
-                            elide: Text.ElideRight
-                        }
-                        Text {
-                            text: model.summary
-                            width: parent.width
-                            color: "#eeeeee"
-                            font.family: Theme.fontFamily
-                            font.pixelSize: Theme.fontSizeSmall
-                            wrapMode: Text.Wrap
-                            visible: text !== ""
-                        }
-                        Text {
-                            text: model.body
-                            width: parent.width
-                            color: "#cccccc"
-                            font.family: Theme.fontFamily
-                            font.pixelSize: Theme.fontSizeCaption
-                            wrapMode: Text.Wrap
-                            visible: text !== ""
-                        }
-                    }
-                }
-
-                Timer {
-                    interval: 4000
-                    running: !dismissed
-                    repeat: false
-                    onTriggered: {
-                        dismissAnimation.start();
-                        if (rawNotification) rawNotification.expire();
-                    }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        dismissAnimation.start();
-                        if (rawNotification) rawNotification.dismiss();
-                    }
-                }
-
-                ParallelAnimation {
-                    id: dismissAnimation
-                    NumberAnimation { target: notificationDelegate; property: "opacity"; to: 0; duration: 150 }
-                    NumberAnimation { target: notificationDelegate; property: "height"; to: 0; duration: 150 }
-                    NumberAnimation { target: notificationDelegate; property: "x"; to: width; duration: 150; easing.type: Easing.InQuad }
-                    onFinished: {
-                        var idx = notificationRepeater.indexOf(notificationDelegate);
-                        if (idx !== -1) {
-                            notificationModel.remove(idx);
-                        }
-                    }
-                }
-
-                ParallelAnimation {
-                    id: appearAnimation
-                    NumberAnimation { target: notificationDelegate; property: "opacity"; to: 1; duration: 150 }
-                    NumberAnimation { target: notificationDelegate; property: "height"; to: contentRow.height + 20; duration: 150 }
-                    NumberAnimation { target: notificationDelegate; property: "x"; to: 0; duration: 150; easing.type: Easing.OutQuad }
-                }
-
-                Component.onCompleted: {
-                    if (!appeared) {
-                        opacity = 0;
-                        height = 0;
-                        x = width;
-                        appearAnimation.start();
-                        var idx = notificationRepeater.indexOf(notificationDelegate);
-                        if (idx !== -1) {
-                            var oldItem = notificationModel.get(idx);
-                            notificationModel.set(idx, {
-                                id: oldItem.id,
-                                appName: oldItem.appName,
-                                summary: oldItem.summary,
-                                body: oldItem.body,
-                                rawNotification: oldItem.rawNotification,
-                                appeared: true,
-                                dismissed: oldItem.dismissed
-                            });
-                        }
-                    }
+                // Behavior properties
+                timeout: window.notificationTimeout
+                iconSource: window.getIconSource(model.rawNotification)
+                
+                onRemoveFromModel: {
+                    notificationModel.remove(model.index);
                 }
             }
         }
     }
 
+    // Handle screen changes
     Connections {
         target: Quickshell
         function onScreensChanged() {
             if (window.screen) {
-                x = window.screen.width - width - 20
+                x = window.screen.width - width - 20;
             }
         }
     }
