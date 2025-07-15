@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
+import Quickshell.Hyprland
 import "root:/config"
 
 PanelWindow {
@@ -11,13 +12,31 @@ PanelWindow {
     implicitHeight: notificationColumn.implicitHeight + 60
     
     visible: notificationModel.count > 0
-    screen: Quickshell.primaryScreen !== undefined ? Quickshell.primaryScreen : null
+    screen: null
     focusable: false
 
     anchors.top: true
     anchors.right: true
     margins.top: 6
     margins.right: 6
+
+    // Assigning notifications to preffered screen by name
+    Component.onCompleted: {
+        // console.log(Quickshell.screens)
+        // console.log(Quickshell.screens[0])
+        // console.log(Quickshell.screens[0].name)
+
+        const targetName = "DP-2"
+        for (let i = 0; i < Quickshell.screens.length; ++i) {
+            let screenInfo = Quickshell.screens[i];
+            if (screenInfo.name === targetName) {
+                console.log("Assigning notifications to screen:", screenInfo.name)
+                window.screen = screenInfo.screen
+                return
+            }
+        }
+        console.warn("Screen", targetName, "not found in Quickshell.screens")
+    }
 
     ListModel {
         id: notificationModel
