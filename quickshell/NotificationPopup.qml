@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Hyprland
 import "root:/config"
 
 PanelWindow {
@@ -18,7 +17,7 @@ PanelWindow {
     anchors.top: true
     anchors.right: true
     margins.top: 6
-    margins.right: 6
+    margins.right: 6 
 
     // Assigning notifications to preffered screen by name
     Component.onCompleted: {
@@ -27,11 +26,12 @@ PanelWindow {
         // console.log(Quickshell.screens[0].name)
 
         const targetName = "DP-2"
+        // const targetName = "HDMI-A-1"
         for (let i = 0; i < Quickshell.screens.length; ++i) {
-            let screenInfo = Quickshell.screens[i];
-            if (screenInfo.name === targetName) {
-                console.log("Assigning notifications to screen:", screenInfo.name)
-                window.screen = screenInfo.screen
+            let screen = Quickshell.screens[i];
+            if (screen.name === targetName) {
+                console.log("Assigning notifications to screen:", screen)
+                window.screen = screen 
                 return
             }
         }
