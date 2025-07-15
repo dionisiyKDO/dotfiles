@@ -132,6 +132,14 @@ cd() {
     dev) builtin cd /home/dionisiy/Desktop/dev ;;
     # vids) builtin cd /home/dionisiy/Videos ;;
     # dl) builtin cd ~/Downloads ;;
-    # *) builtin cd "$@" ;;
+    *) builtin cd "$@" ;;
   esac
 }
+
+
+# bun completions
+[ -s "/home/dionisiy/.bun/_bun" ] && source "/home/dionisiy/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
