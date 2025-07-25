@@ -171,8 +171,9 @@ spawn-at-startup "xwayland-satellite"
 spawn-at-startup "waybar"
 spawn-at-startup "aw-qt"
 spawn-at-startup "clipse" "-listen"
-spawn-at-startup "dunst"
-spawn-at-startup "swww-daemon"
+spawn-at-startup "quickshell"
+// spawn-at-startup "dunst"
+// spawn-at-startup "swww-daemon"
 // spawn-at-startup "swww" "img" "~/wallpapers/default.jpg"
 spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &"
 
@@ -260,7 +261,6 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "rofi" "-show" "drun"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
@@ -285,7 +285,8 @@ binds {
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
 
-    Mod+Q { close-window; }
+    Mod+C { close-window; }
+    Mod+Q hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
 
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-down; }
@@ -447,7 +448,7 @@ binds {
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
 
-    Mod+C { center-column; }
+    // Mod+C { center-column; }
 
     // Center all fully visible columns on screen.
     Mod+Ctrl+C { center-visible-columns; }
