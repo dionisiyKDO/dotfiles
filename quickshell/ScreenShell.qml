@@ -15,6 +15,12 @@ Scope {
         screenModel: scr
     }
 
-    LazyLoader { active: enableHorizontalBar; component: HorizontalBar { screenModel: scr } }
-    LazyLoader { active: enableVerticalBar; component: VerticalBar { screenModel: scr } }
+    LazyLoader { active: enableHorizontalBar; component: HorizontalBar { 
+        screenModel: scr 
+        visible: screenModel.name == "DP-2"
+        } }
+    LazyLoader { active: enableVerticalBar; component: VerticalBar { 
+        screenModel: scr 
+        visible: screenModel.name == "DP-2"
+        } }
 }
