@@ -46,21 +46,12 @@ PanelWindow {
         Rectangle {
             id: separator_1
 
-            anchors.bottom: time.top
+            anchors.bottom: clock.top
             implicitHeight: 1
             implicitWidth: parent.width
             
             color: "#fff"
         }
-
-        Item {
-            id: time
-
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            
-            implicitHeight: 60
-            implicitWidth: parent.width
 
             // Debug background rectangle for visibility of the area element occupies
             // Rectangle {
@@ -69,15 +60,15 @@ PanelWindow {
             //     opacity: 0.2
             // }
             
-            ClockWidget {
-                id: clock
+        ClockWidget {
+            id: clock
 
-                anchors.centerIn: parent
-                anchors.rightMargin: Appearance.spacing.large
-                anchors.leftMargin: Appearance.spacing.large
+            anchors.bottom: parent.bottom
 
-                format: "hh\nmm"
-            }
+            implicitHeight: 60
+            implicitWidth: parent.width
+
+            format: "hh\nmm"
         }
     }
 
