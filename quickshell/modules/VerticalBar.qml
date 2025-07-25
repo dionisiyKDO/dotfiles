@@ -22,25 +22,63 @@ PanelWindow {
         color: "#000000"
     }
 
+
+
     // **Bottom** 
     //      Clock
+    //      Language
     Item {
-        id: center
+        id: bottom
 
         anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        
-        implicitHeight: 60
-        
-        
-        ClockWidget {
-            id: clock
+        anchors.right: parent.right
+        anchors.left: parent.left
 
-            anchors.centerIn: parent
-            anchors.rightMargin: Appearance.spacing.large
-            anchors.leftMargin: Appearance.spacing.large
+        implicitHeight: 100
 
-            format: "hh\nmm"
+        LanguageIndicator {
+            id: language
+
+            anchors.bottom: separator_1.top
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        Rectangle {
+            id: separator_1
+
+            anchors.bottom: time.top
+            implicitHeight: 1
+            implicitWidth: parent.width
+            
+            color: "#fff"
+        }
+
+        Item {
+            id: time
+
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            
+            implicitHeight: 60
+            implicitWidth: parent.width
+
+            // Debug background rectangle for visibility of the area element occupies
+            // Rectangle {
+            //     anchors.fill: parent
+            //     color: "#fff"
+            //     opacity: 0.2
+            // }
+            
+            ClockWidget {
+                id: clock
+
+                anchors.centerIn: parent
+                anchors.rightMargin: Appearance.spacing.large
+                anchors.leftMargin: Appearance.spacing.large
+
+                format: "hh\nmm"
+            }
         }
     }
+
 }
