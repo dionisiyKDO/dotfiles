@@ -6,7 +6,7 @@ import Quickshell.Io
 Item {
     id: root
 
-    property string layoutText: "English (US)"
+    property string layoutText: "US"
 
     implicitWidth: label.implicitWidth
     implicitHeight: label.implicitHeight
@@ -36,15 +36,23 @@ Item {
                     if (json && json.keyboards) {
                         for (const kb of json.keyboards) {
                             if (kb.main) {
-                                layoutText = kb.active_keymap;
+                                if (kb.active_keymap == "English (US)") {
+                                    layoutText = "US";
+                                } else if (kb.active_keymap == "Russian") {
+                                    layoutText = "RU";
+                                } else if (kb.active_keymap == "Ukrainian") {
+                                    layoutText = "UA";
+                                } else {
+                                    layoutText = kb.active_keymap;
+                                }
                                 break;
                             }
                         }
                     } else {
-                        layoutText = "No layout";
+                        layoutText = "??";
                     }
                 } catch (e) {
-                    layoutText = "Error parsing JSON";
+                    layoutText = "??";
                 }
             }
         }
