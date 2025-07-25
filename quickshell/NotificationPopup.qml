@@ -103,11 +103,11 @@ PanelWindow {
     
 
     // Debug send notification
-    Process {
-        id: debugProcess
-        command: ["notify-send", "yo", "https://github.com/dionisiyKDO", "--app-name=GitHub"]
-        running: true
-    }
+    // Process {
+    //     id: debugProcess
+    //     command: ["notify-send", "yo", "https://github.com/dionisiyKDO", "--app-name=GitHub"]
+    //     running: true
+    // }
 
     Column {
         id: notificationColumn
