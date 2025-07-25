@@ -55,7 +55,8 @@ PanelWindow {
         
         ClockWidget {
             id: clock
-            color: "white"
+
+            format: "ddd - MMM d | hh:mm:ss AP"
 
             anchors.centerIn: parent
             anchors.rightMargin: Appearance.spacing.large
