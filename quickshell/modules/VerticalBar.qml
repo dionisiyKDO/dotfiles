@@ -3,6 +3,7 @@ import QtQuick
 import Quickshell.Wayland
 import "root:/config"
 import "root:/widgets"
+import "root:/services"
 
 
 PanelWindow {
@@ -22,6 +23,27 @@ PanelWindow {
         color: "#000000"
     }
 
+    // **Bottom** 
+    //      Workspaces
+
+    Workspaces {
+        id: workspaces
+
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        implicitHeight: 200
+
+        // Rectangle {
+        //     anchors.fill: parent
+        //     color: "#fff"
+        //     opacity: 0.1
+        // }
+
+
+        screen: screenModel
+    }
 
 
     // **Bottom** 
