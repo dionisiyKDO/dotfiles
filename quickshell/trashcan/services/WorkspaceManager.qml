@@ -13,47 +13,29 @@ Singleton {
     property var hlWorkspaces: Hyprland.workspaces.values // Raw Hyprland workspaces
     property ListModel workspaces: ListModel {} // Processed list of workspaces
     
-    // signal workspacesChanged()
+    signal workspaceChanged()
 
-    Component.onCompleted: initHyprland();
+    Component.onCompleted: updateWorkspaces();
 
-    // Initialize Hyprland integration
-    function initHyprland() {
-        try {
-            updateHyprlandWorkspaces();
-        } catch (e) {
-            console.error("Error initializing Hyprland:", e);
-        }
-    }
-
-    // =======================
-    // HYPRLAND EVENT HANDLERS
-    // =======================
-    // doesn't detect switching workspaces, so listening to Hyprland raw events is necessary
+    // When Hyprland workspaces change, update our list
     Connections {
         target: Hyprland.workspaces
         function onValuesChanged() {
-            updateHyprlandWorkspaces();
+            updateWorkspaces();
         }
     }
 
+    // When any Hyprland event happens, update our list
     Connections {
         target: Hyprland
         function onRawEvent(event) {
-            updateHyprlandWorkspaces();
+            updateWorkspaces();
         }
     }
 
 
-    // ==============================
-    // WORKSPACE MANAGEMENT FUNCTIONS
-    // ==============================
-    /**
-     * Updates workspaces from Hyprland
-     * Converts raw Hyprland workspace data into our ListModel format
-     * Called on Hyprland events and during initialization
-     */
-    function updateHyprlandWorkspaces() {
+    // function to update workspace list
+    function updateWorkspaces() {
         Hyprland.refreshWorkspaces(); // Refresh workspaces state
         hlWorkspaces = Hyprland.workspaces.values; // Get raw Hyprland workspaces data
         workspaces.clear(); // Clear existing workspaces data
@@ -73,17 +55,14 @@ Singleton {
                 });
             }
             
-            workspacesChanged();
+            workspaceChanged();
             
         } catch (e) {
             console.error("Error updating Hyprland workspaces:", e);
         }
     }
 
-    /**
-     * Switches to the specified workspace
-     * @param {int} workspaceId - The ID of the workspace to switch to
-     */
+    // function to switch workspaces
     function switchToWorkspace(workspaceId) {
         try {
             Hyprland.dispatch(`workspace ${workspaceId}`);

@@ -1,3 +1,4 @@
+// quickshell/modules/VerticalBar.qml
 import Quickshell
 import QtQuick
 import Quickshell.Wayland
@@ -33,17 +34,21 @@ PanelWindow {
         anchors.right: parent.right
         anchors.top: parent.top
 
+        anchors.topMargin: 8
+
         implicitHeight: 200
 
         // Rectangle {
         //     anchors.fill: parent
-        //     color: "#fff"
-        //     opacity: 0.1
+        //     color: "#ffffff"
+        //     opacity: 0.3
         // }
 
 
         screen: screenModel
     }
+
+
 
 
     // **Bottom** 
@@ -82,7 +87,7 @@ PanelWindow {
             //     opacity: 0.2
             // }
             
-        ClockWidget {
+        Item {
             id: clock
 
             anchors.bottom: parent.bottom
@@ -90,7 +95,18 @@ PanelWindow {
             implicitHeight: 60
             implicitWidth: parent.width
 
-            format: "hh\nmm"
+            Text {                
+                text: Qt.formatDateTime(Time.currentTime, "hh\nmm")
+
+                anchors.bottom: parent.bottom
+                anchors.centerIn: parent
+                horizontalAlignment: Text.AlignHCenter
+
+                color: "white"
+                font.pixelSize: 20
+                font.family: "Arial"
+                font.weight: Font.Bold
+            }
         }
     }
 
