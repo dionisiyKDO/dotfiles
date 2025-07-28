@@ -36,15 +36,15 @@ Singleton {
     }
 
     component FontFamily: QtObject {
+        readonly property string roboto: "Roboto"
         readonly property string sans: "IBM Plex Sans"
-        readonly property string mono: "JetBrains Mono NF"
         readonly property string material: "Material Symbols Rounded"
     }
 
     component FontSize: QtObject {
-        readonly property int small: 11
-        readonly property int smaller: 12
-        readonly property int normal: 13
+        readonly property int small: 8
+        readonly property int smaller: 10
+        readonly property int normal: 12
         readonly property int larger: 15
         readonly property int large: 18
         readonly property int extraLarge: 28
