@@ -23,7 +23,7 @@ PanelWindow {
     Image {
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
-        source: Settings.currentWallpaper !== "" ? Settings.currentWallpaper : "/home/dionisiy/Pictures/Wallpapers/SFW/wallhaven-5gj8w9_1920x1080.png"
+        source: Settings.currentWallpaper !== "" ? Settings.currentWallpaper : Settings.favoriteWallpaper
         cache: true
         smooth: true
     }
