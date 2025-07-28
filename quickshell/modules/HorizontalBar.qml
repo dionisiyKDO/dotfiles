@@ -48,7 +48,7 @@ PanelWindow {
     }
 
     // **Center** 
-    //      Clock
+    //      Media
     Item {
         id: center
 
@@ -60,6 +60,12 @@ PanelWindow {
         anchors.rightMargin: Appearance.spacing.small
         
         implicitHeight: parent.height
+        implicitWidth: media.implicitWidth
+        
+
+        Media {
+            id: media
+        }
     }
 
 
