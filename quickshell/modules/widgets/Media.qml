@@ -9,7 +9,7 @@ import Quickshell.Services.Mpris
 
 Item {
     id: root
-    
+
     readonly property MprisPlayer activePlayer: MprisController.activePlayer
     readonly property string songInfo: {
         if (!activePlayer || !activePlayer.trackTitle) return "No media playing"
@@ -25,12 +25,25 @@ Item {
     property int buttonSize: 10
     property int buttonRadius: 2
     property string buttonFontSize: Appearance.font.size.smaller
+
+    property bool autoHidden: false
     
     implicitWidth: mediaRow.implicitWidth
     implicitHeight: mediaRow.implicitHeight
     
-    visible: activePlayer && activePlayer.trackTitle
+    opacity: (activePlayer && activePlayer.trackTitle && !autoHidden) ? 1.0 : 0.0
+    visible: root.opacity > 0
 
+    // Animate the opacity property whenever it changes
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 400 // Animation duration in milliseconds
+            easing.type: Easing.InOutQuad
+        }
+    }
+
+    
+    
     RowLayout {
         id: mediaRow
         anchors.centerIn: parent
@@ -134,6 +147,35 @@ Item {
             font.pointSize: textFontSize
             font.family: fontFamily
             // font.bold: true
+        }
+    }
+
+
+    // Timer for auto-hide functionality
+    Timer {
+        id: autoHideTimer
+        interval: 10_000 // 10 seconds
+        running: false
+        repeat: false
+        onTriggered: {
+            if (activePlayer && activePlayer.playbackState !== MprisPlaybackState.Playing) {
+                autoHidden = true
+            }
+        }
+    }
+
+    // Watch for playback state changes
+    Connections {
+        target: activePlayer
+        function onPlaybackStateChanged() {
+            if (activePlayer.playbackState === MprisPlaybackState.Playing) {
+                // Player started playing - show widget and reset timer
+                autoHidden = false
+                autoHideTimer.stop()
+            } else {
+                // Player paused/stopped - start hide timer
+                autoHideTimer.restart()
+            }
         }
     }
 }
