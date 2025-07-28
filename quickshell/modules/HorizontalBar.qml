@@ -3,8 +3,7 @@ import QtQuick
 import Quickshell.Wayland
 import Quickshell.Io
 import "root:/config"
-import "root:/widgets"
-import "root:/modules"
+import "root:/modules/widgets"
 
 
 PanelWindow {
@@ -12,7 +11,8 @@ PanelWindow {
     screen: screenModel // set the the screen on which it is shown as the injected screen, so it creates bar for each screen
 
     implicitWidth: screen.width
-    implicitHeight: 32
+    implicitHeight: 18
+
     anchors {
         top: true
         left: true
@@ -32,11 +32,16 @@ PanelWindow {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
+
         anchors.leftMargin: Appearance.spacing.small
-        implicitHeight: 30
-        implicitWidth: 150  // TEMP
+        anchors.rightMargin: Appearance.spacing.small
+
+        implicitHeight: parent.height
+        implicitWidth: title.implicitWidth
 
         WindowTitle {
+            id: title
+
             anchors.left: parent.left
         }
     }
@@ -49,37 +54,51 @@ PanelWindow {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        
-        implicitHeight: 30
-        implicitWidth: 150  // TEMP
-        
-        ClockWidget {
-            id: clock
 
-            format: "ddd - MMM d | hh:mm:ss AP"
-
-            anchors.centerIn: parent
-            anchors.rightMargin: Appearance.spacing.large
-            anchors.leftMargin: Appearance.spacing.large
-        }
+        anchors.leftMargin: Appearance.spacing.small
+        anchors.rightMargin: Appearance.spacing.small
+        
+        implicitHeight: parent.height
     }
 
 
     // **Right** 
     //      Language
+    //      Clock
     Item {
         id: right
 
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.right: parent.right
+
+        anchors.leftMargin: Appearance.spacing.small
         anchors.rightMargin: Appearance.spacing.small
-        implicitHeight: 30
-        implicitWidth: 150  // TEMP
+        
+        implicitHeight: parent.height
+        implicitWidth: language.implicitWidth + clock.implicitWidth + Appearance.spacing.normal * 4
 
         LanguageIndicator {
+            id: language
+
+            anchors.right: clock.left
+            anchors.rightMargin: Appearance.spacing.normal
+            anchors.leftMargin: Appearance.spacing.normal
+
+            format: "long" // "short" for "US", "RU", "UA"       "long" for "English", "Russian", "Ukrainian"
+        }
+
+
+        Clock {
+            id: clock
+
             anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.rightMargin: Appearance.spacing.normal
+            anchors.leftMargin: Appearance.spacing.normal
+
+            // format: "ddd - MMM d | hh:mm:ss AP"
+            // format: "hh:mm:ss AP"
+            format: "hh:mm:ss"
         }
     }
 }
