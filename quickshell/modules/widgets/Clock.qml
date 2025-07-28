@@ -1,4 +1,4 @@
-// quickshell/modules/Clock.qml
+// quickshell/modules/widgets/Clock.qml
 import QtQuick
 import QtQuick.Controls
 import Quickshell.Io

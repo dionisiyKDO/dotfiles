@@ -1,3 +1,4 @@
+// quickshell/NotificationDelegate.qml
 import QtQuick
 import QtQuick.Controls
 import Quickshell

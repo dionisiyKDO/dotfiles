@@ -1,4 +1,4 @@
-// LanguageIndicator.qml
+// quickshell/modules/widgets/LanguageIndicator.qml
 import QtQuick
 import QtQuick.Controls
 import Quickshell.Io

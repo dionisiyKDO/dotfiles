@@ -1,3 +1,4 @@
+// quickshell/NotificationPopup.qml
 import QtQuick
 import QtQuick.Controls
 import Quickshell

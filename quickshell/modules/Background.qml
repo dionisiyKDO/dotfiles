@@ -1,3 +1,4 @@
+// quickshell/modules/Background.qml
 import QtQuick
 import Quickshell
 import Quickshell.Wayland

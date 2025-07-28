@@ -1,3 +1,4 @@
+// quickshell/config/Appearance.qml
 pragma Singleton
 
 import Quickshell

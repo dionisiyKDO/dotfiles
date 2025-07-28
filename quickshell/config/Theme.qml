@@ -1,4 +1,4 @@
-// Theme.qml
+// quickshell/config/Theme.qml
 pragma Singleton
 import QtQuick
 

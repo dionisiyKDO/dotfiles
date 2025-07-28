@@ -1,3 +1,4 @@
+// quickshell/config/Settings.qml
 pragma Singleton
 
 import QtQuick
