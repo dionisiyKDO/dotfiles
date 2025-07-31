@@ -4,6 +4,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Wayland
 import "root:/services"
+import "root:/config"
 
 
 PanelWindow {
@@ -17,7 +18,7 @@ PanelWindow {
     WlrLayershell.namespace: "quickshell-volume-slider"
 
     // Full transparent panel, wide enough to host both hover zone + popup
-    width: 200
+    width: 50
     height: 200
     color: "transparent"
 
@@ -30,53 +31,102 @@ PanelWindow {
     Rectangle {
         id: popupContainer
 
-        width: 50
+        width: parent.width
         height: parent.height
         anchors.right: parent.right
-        color: "#222"
+        color: Theme.surface
+                
+        state: sliderVisible ? "visible" : "hidden"
         
-        opacity: sliderVisible ? 1 : 0
-        visible: sliderVisible
-        Behavior on opacity { NumberAnimation { duration: 150 } }
+        // opacity: sliderVisible ? 1 : 0
+        // visible: sliderVisible
 
         Slider {
             id: volumeSlider
-            anchors.centerIn: parent
+            
             width: 20
             height: 150
+            anchors.centerIn: parent
             orientation: Qt.Vertical
+
             from: 0
             to: 150
-            stepSize: 1
             value: 100
+            stepSize: 10
 
-            onValueChanged: {
-                console.log("Volume changed to:", value)
-                Audio.setVolume(value / 100)
-            }
+            onValueChanged: Audio.setVolume(value / 100)
         }
 
-        // This MouseArea allows user interaction with the slider
+        // Timer trigger hiding the popup after the delay
+        Timer {
+            id: hideTimer
+            interval: 300 // 300ms delay before hiding
+            onTriggered: volumePopup.sliderVisible = false
+        }
+
+        // This MouseArea triggers the hiding of the popup on slider exit
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            propagateComposedEvents: true
-            acceptedButtons: Qt.NoButton // <--- THIS is key
-            onExited: volumePopup.sliderVisible = false
+            acceptedButtons: Qt.NoButton // To let click events pass through, so MouseArea doesn't what is underneath
+            // propagateComposedEvents: true
+
+            onEntered: {
+                hideTimer.stop()
+            }
+            onExited: {
+                hideTimer.start()
+            }
         }
+
+        
+
+
+        transitions: [
+            Transition {
+                // Animate the transition between any state
+                from: "*"; to: "*"
+                
+                // Animate both properties at the same time for a smooth effect
+                ParallelAnimation {
+                    NumberAnimation { 
+                        properties: "anchors.rightMargin, opacity"
+                        duration: 200
+                        easing.type: Easing.OutCubic 
+                    }
+                }
+            }
+        ]
+
+        states: [
+            State {
+                name: "visible"
+                // When visible, the margin is 0 and it's fully opaque
+                PropertyChanges { target: popupContainer; anchors.rightMargin: 0; opacity: 1 }
+            },
+            State {
+                name: "hidden"
+                // When hidden, move it off-screen by its own width and make it transparent
+                PropertyChanges { target: popupContainer; anchors.rightMargin: -popupContainer.width; opacity: 0 }
+            }
+        ]
     }
 
-    // Invisible edge trigger
+    // This MouseArea triggers the popup visibility on hover and hides it after mouse exit
     MouseArea {
         id: edgeHoverZone
-        width: 5
+        
+        width: 2
         height: parent.height
         anchors.right: parent.right
-        hoverEnabled: true
-        cursorShape: Qt.PointingHandCursor
+        hoverEnabled: true // without it only works when lmb is pressed
+
         onEntered: {
-            console.log("Edge hover triggered")
+            hideTimer.stop()
             volumePopup.sliderVisible = true
+        }
+        onExited: {
+            hideTimer.start()
         }
     }
 }
