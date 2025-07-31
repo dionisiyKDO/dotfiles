@@ -49,7 +49,7 @@ PanelWindow {
             from: 0
             to: 150
             value: 100
-            stepSize: 1
+            stepSize: 10
 
             property bool isMoving: pressed
 
@@ -179,6 +179,7 @@ PanelWindow {
         }
 
         // This MouseArea triggers the hiding of the popup on slider exit
+        // Plus scrolling to change volume
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
@@ -187,6 +188,18 @@ PanelWindow {
 
             onEntered: hideTimer.stop()
             onExited: hideTimer.start()
+
+            // Handle mouse wheel scrolling
+            // TODO: Think about animations. Because of them it doesn't consistently change value by stepSize, animation doesn't keep up with wheel speed maybe(?)
+            onWheel: function(wheel) {
+                var delta = wheel.angleDelta.y / 120  // Standard wheel delta
+                volumeSlider.value = Math.max(volumeSlider.from, 
+                    Math.min(volumeSlider.to, volumeSlider.value + (delta * volumeSlider.stepSize)))
+                
+                // Show value indicator when scrolling
+                volumeSlider.isMoving = true
+                valueDisplayTimer.restart()
+            }
         }
 
         transitions: [
