@@ -18,8 +18,8 @@ PanelWindow {
     WlrLayershell.namespace: "quickshell-volume-slider"
 
     // Full transparent panel, wide enough to host both hover zone + popup
-    width: 60
-    height: 200
+    implicitWidth: 60
+    implicitHeight: 200
     color: "transparent"
 
     anchors.right: true
