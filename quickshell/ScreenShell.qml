@@ -27,6 +27,14 @@ Scope {
         } 
     }
 
+    LazyLoader { 
+        active: enableHorizontalBar; 
+        component: VolumePopup {
+            id: testComponent
+            screenModel: scr
+            visible: screenModel.name == "DP-2"
+        }
+    }
 
     
     // property bool enableVerticalBar: false 
