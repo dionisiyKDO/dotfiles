@@ -13,7 +13,7 @@ PanelWindow {
     required property var screenModel
     screen: screenModel
 
-    WlrLayershell.layer: WlrLayer.Top
+    WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.exclusionMode: ExclusionMode.Ignore
     WlrLayershell.namespace: "quickshell-volume-slider"
 
