@@ -23,6 +23,7 @@ PanelWindow {
     color: "transparent"
 
     anchors.right: true
+    
 
     // Controls visibility of slider
     property bool sliderVisible: false
@@ -35,7 +36,10 @@ PanelWindow {
         height: parent.height
         anchors.right: parent.right
         color: Theme.surface
-                
+
+        layer.enabled: true
+        // layer.smooth: true
+        
         state: sliderVisible ? "visible" : "hidden"
         
         Slider {
@@ -204,10 +208,19 @@ PanelWindow {
 
         transitions: [
             Transition {
-                // Animate the transition between any state
-                from: "*"; to: "*"
+                from: "visible"; to: "hidden"
+
+                ParallelAnimation {
+                    NumberAnimation { 
+                        properties: "opacity, scale"
+                        duration: 200
+                        easing.type: Easing.OutCubic 
+                    }
+                }
+            },
+            Transition {
+                from: "hidden"; to: "visible"
                 
-                // Animate both properties at the same time for a smooth effect
                 ParallelAnimation {
                     NumberAnimation { 
                         properties: "anchors.rightMargin, opacity"
