@@ -18,7 +18,7 @@ PanelWindow {
     WlrLayershell.namespace: "quickshell-volume-slider"
 
     // Full transparent panel, wide enough to host both hover zone + popup
-    width: 50
+    width: 60
     height: 200
     color: "transparent"
 
@@ -38,13 +38,10 @@ PanelWindow {
                 
         state: sliderVisible ? "visible" : "hidden"
         
-        // opacity: sliderVisible ? 1 : 0
-        // visible: sliderVisible
-
         Slider {
             id: volumeSlider
             
-            width: 20
+            width: 16  // Wider track
             height: 150
             anchors.centerIn: parent
             orientation: Qt.Vertical
@@ -52,9 +49,126 @@ PanelWindow {
             from: 0
             to: 150
             value: 100
-            stepSize: 10
+            stepSize: 1
 
-            onValueChanged: Audio.setVolume(value / 100)
+            property bool isMoving: pressed
+
+            // Custom background (track)
+            background: Rectangle {
+                width: volumeSlider.width
+                height: volumeSlider.height
+
+                color: "#40ffffff"  // Semi-transparent white
+                radius: width / 2  // Fully rounded
+                
+                // Filled portion
+                Rectangle {
+                    width: parent.width
+                    height: (1 - volumeSlider.visualPosition) * parent.height
+                    anchors.bottom: parent.bottom
+
+                    color: Theme.accentPrimary || "#0078d4"  // Use theme accentPrimary or fallback
+                    radius: parent.radius
+                }
+            }
+
+            // Custom handle (circle)
+            handle: Item {
+                width: 24
+                height: 24
+                x: (volumeSlider.width - width) / 2
+                y: volumeSlider.visualPosition * (volumeSlider.availableHeight - height)
+                
+                // Shadow effect
+                Rectangle {
+                    width: parent.width + 2
+                    height: parent.height + 2
+                    anchors.centerIn: parent
+
+                    color: "#20000000"  // Subtle shadow
+                    radius: width / 2
+                }
+                
+                // Main handle circle
+                Rectangle {
+                    id: handleCircle
+
+                    width: parent.width
+                    height: parent.height
+                    anchors.centerIn: parent
+                    
+                    color: Theme.surfaceVariant
+                    border.color: Theme.accentPrimary || "#0078d4"
+                    border.width: 2
+                    radius: width / 2
+                    
+                    // Scale animation when pressed
+                    scale: volumeSlider.pressed ? 1.2 : 1.0
+                    
+                    Behavior on scale {
+                        NumberAnimation {
+                            duration: 150
+                            easing.type: Easing.OutCubic
+                        }
+                    }
+                    
+                    // Value display
+                    Text {
+                        text: Math.round(volumeSlider.value)
+
+                        anchors.centerIn: parent
+
+                        color: Theme.accentPrimary || "#0078d4"
+                        opacity: volumeSlider.isMoving ? 1.0 : 0.0
+
+                        font.pixelSize: 8
+                        font.bold: true
+                        
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 200
+                                easing.type: Easing.OutCubic
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Smooth value animation
+            Behavior on value {
+                enabled: !volumeSlider.pressed
+                NumberAnimation {
+                    duration: 200
+                    easing.type: Easing.OutCubic
+                }
+            }
+            
+            // Timer to hide value after interaction
+            Timer {
+                id: valueDisplayTimer
+                interval: 1000
+                onTriggered: volumeSlider.isMoving = false
+            }
+            
+            onPressedChanged: {
+                isMoving = pressed
+                if (pressed) {
+                    valueDisplayTimer.stop()
+                } else {
+                    valueDisplayTimer.start()
+                }
+            }
+            
+            onValueChanged: {
+                Audio.setVolume(value / 100)
+                if (!pressed) {
+                    isMoving = true
+                    valueDisplayTimer.restart()
+                }
+            }
+
+
+
         }
 
         // Timer trigger hiding the popup after the delay
@@ -69,18 +183,11 @@ PanelWindow {
             anchors.fill: parent
             hoverEnabled: true
             acceptedButtons: Qt.NoButton // To let click events pass through, so MouseArea doesn't what is underneath
-            // propagateComposedEvents: true
+            propagateComposedEvents: true
 
-            onEntered: {
-                hideTimer.stop()
-            }
-            onExited: {
-                hideTimer.start()
-            }
+            onEntered: hideTimer.stop()
+            onExited: hideTimer.start()
         }
-
-        
-
 
         transitions: [
             Transition {
