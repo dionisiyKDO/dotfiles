@@ -23,7 +23,7 @@ Scope {
         active: enableHorizontalBar; 
         component: HorizontalBar { 
             screenModel: scr 
-            visible: screenModel.name == "DP-2"
+            // visible: screenModel.name == "DP-2"
         } 
     }
 
