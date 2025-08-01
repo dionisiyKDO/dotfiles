@@ -18,7 +18,7 @@ PanelWindow {
     WlrLayershell.namespace: "quickshell-volume-slider"
 
     // Full transparent panel, wide enough to host both hover zone + popup
-    implicitWidth: 60
+    implicitWidth: (sliderVisible || animationPlaying) ? 60 : 2 // Panel window prevents clicking underneath it, even being transparent, so we change its width to 2 when not visible, also for not disturb content while animation is playing add additional flag
     implicitHeight: 200
     color: "transparent"
 
@@ -27,6 +27,7 @@ PanelWindow {
 
     // Controls visibility of slider
     property bool sliderVisible: false
+    property bool animationPlaying: false
 
     // Slider container
     Rectangle {
@@ -189,6 +190,7 @@ PanelWindow {
             hoverEnabled: true
             acceptedButtons: Qt.NoButton // To let click events pass through, so MouseArea doesn't what is underneath
             propagateComposedEvents: true
+            enabled: volumePopup.sliderVisible  // Only enabled when visible
 
             onEntered: hideTimer.stop()
             onExited: hideTimer.start()
@@ -210,6 +212,8 @@ PanelWindow {
             Transition {
                 from: "visible"; to: "hidden"
 
+                onRunningChanged: volumePopup.animationPlaying = running
+
                 ParallelAnimation {
                     NumberAnimation { 
                         properties: "opacity, scale"
@@ -220,6 +224,8 @@ PanelWindow {
             },
             Transition {
                 from: "hidden"; to: "visible"
+
+                onRunningChanged: volumePopup.animationPlaying = running
                 
                 ParallelAnimation {
                     NumberAnimation { 
